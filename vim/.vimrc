@@ -37,7 +37,9 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Tabaroonies
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 et
+autocmd Filetype python setlocal ts=2 sts=2 sw=2 et
 autocmd Filetype json setlocal ts=2 sts=2 sw=2 et
+autocmd Filetype yml setlocal ts=2 sts=2 sw=2 et
 
 " Split stuff
 nnoremap <C-J> <C-W><C-J>
@@ -58,4 +60,6 @@ set number
 " Adding blank lines
 nmap <C-Enter> O<Esc>j
 
-
+" Silly startup commands
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd l
