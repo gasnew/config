@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/Users/garrettnewman'
+let g:netrw_dirhist_2='/Users/garrettnewman/.Trash'
+let g:netrw_dirhist_3='/Users/garrettnewman'
+let g:netrw_dirhist_4='/Users/garrettnewman/.vim'
+let g:netrw_dirhist_5='/Users/garrettnewman/lims/ui'
+let g:netrw_dirhist_6='/Users/garrettnewman/gappy'
