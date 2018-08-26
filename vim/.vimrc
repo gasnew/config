@@ -14,8 +14,7 @@ call plug#begin('~/.vim/bundle')
 
 " Support
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'ctrlpvim/ctrlp.vim', {'on': ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
 Plug 'ervandew/supertab'
 Plug 'honza/vim-snippets'
 Plug 'janko-m/vim-test'
@@ -90,6 +89,11 @@ set relativenumber
 set ruler
 set shortmess=atI
 set showcmd
+set guioptions-=T
+set guioptions-=m  "remove menu bar
+set guioptions-=T  "remove toolbar
+set guioptions-=r  "remove right-hand scroll bar
+set guioptions-=L  "remove left-hand scroll bar
 
 " Tab settings
 set tabstop=2
@@ -155,7 +159,7 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
-nnoremap <C-p> :FZF<CR>
+nnoremap <C-p> :CtrlP<CR>
 
 let g:SuperTabDefaultCompletionType = '<C-n>'
 
@@ -167,7 +171,6 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \ 'javascript': ['prettier'],
 \}
-let g:ale_javascript_eslint_use_global = 1
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
 let g:ale_lint_delay = 2000
 
