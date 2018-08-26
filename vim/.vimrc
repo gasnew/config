@@ -1,15 +1,16 @@
-" Vim settings
+ " Vim settings
 set nocompatible
 
 " Use vim-plug for bundle management https://github.com/junegunn/vim-plug
 
 " Automatically install vim-plug
-if has('nvim')
-  let g:python_host_prog  = '/usr/local/bin/python2'
-  let g:python3_host_prog  = '/usr/local/bin/python3'
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin('~/.vim/bundle')
 
 " Support
 Plug 'christoomey/vim-tmux-navigator'
@@ -40,15 +41,12 @@ Plug 'majutsushi/tagbar'
 Plug 'editorconfig/editorconfig-vim'
 
 " Completion
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-Plug 'roxma/nvim-completion-manager'
-Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
 Plug 'roxma/ncm-flow'
 Plug 'roxma/ncm-rct-complete'
 Plug 'roxma/ncm-elm-oracle'
 
 " Display
-Plug 'altercation/vim-colors-solarized'
+Plug 'micha/vim-colors-solarized'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'flazz/vim-colorschemes'
 Plug 'vim-airline/vim-airline'
@@ -64,9 +62,6 @@ Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
 
 " Javascript
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
-
-" Haskell
-Plug 'neovimhaskell/haskell-vim'
 
 " Elm
 Plug 'elmcast/elm-vim'
@@ -176,16 +171,8 @@ let g:ale_javascript_eslint_use_global = 1
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
 let g:ale_lint_delay = 2000
 
-" LanguageClient-neovim settings
-let g:LanguageClient_serverCommands = {
-\ 'haskell': ['hie', '--lsp'],
-\ 'reason': ['ocaml-language-server', '--stdio'],
-\ 'ocaml': ['ocaml-language-server', '--stdio'],
-\}
-let g:LanguageClient_autoStart = 1
-
 " Airline settings
-set guifont=Meslo\ LG\ M\ for\ Powerline
+set guifont=Meslo\ LG\ M\ Regular
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
