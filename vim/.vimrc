@@ -4,12 +4,18 @@ set nocompatible
 " Use vim-plug for bundle management https://github.com/junegunn/vim-plug
 
 " Automatically install vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 if has('nvim')
   let g:python_host_prog  = '/usr/local/bin/python2'
   let g:python3_host_prog  = '/usr/local/bin/python3'
 endif
 
-call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin('~/.vim/bundle')
 
 " Support
 Plug 'christoomey/vim-tmux-navigator'
@@ -25,7 +31,7 @@ Plug 'mbbill/undotree'
 Plug 'mileszs/ack.vim'
 Plug 'mtth/scratch.vim'
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'w0rp/ale'
 Plug 'SirVer/ultisnips'
 Plug 'terryma/vim-multiple-cursors'
@@ -38,14 +44,7 @@ Plug 'tpope/vim-repeat'
 Plug 'docunext/closetag.vim'
 Plug 'majutsushi/tagbar'
 Plug 'editorconfig/editorconfig-vim'
-
-" Completion
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-Plug 'roxma/nvim-completion-manager'
-Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
-Plug 'roxma/ncm-flow'
-Plug 'roxma/ncm-rct-complete'
-Plug 'roxma/ncm-elm-oracle'
+Plug 'tpope/vim-abolish'
 
 " Display
 Plug 'altercation/vim-colors-solarized'
@@ -116,7 +115,7 @@ set infercase
 set smartcase
 
 " This unsets the "last search pattern" register by hitting return
-nnoremap <CR> :noh<CR><CR>
+nnoremap <CR> :noh<CR>
 
 " Tag completion using excuberant ctags
 set tags=tags;/
@@ -171,6 +170,9 @@ let g:ale_linters = {
 \}
 let g:ale_fixers = {
 \ 'javascript': ['prettier'],
+\ 'python': ['yapf'],
+\ 'ruby': ['rubocop'],
+\ 'json': ['prettier'],
 \}
 let g:ale_javascript_eslint_use_global = 1
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
@@ -197,6 +199,9 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 let g:airline#extensions#tabline#enabled = 1     " Show buffers
 let g:airline#extensions#tabline#fnamemod = ':t' " Only show buffer file names
+let g:airline_section_b = ''
+let g:airline_section_y = ''
+let g:airline_section_z = ''
 
 " Buffergator settings
 let g:buffergator_viewport_split_policy = 'R'
@@ -246,3 +251,4 @@ autocmd FileType reason nnoremap <silent> gf :call LanguageClient_textDocument_f
 
 " Markdown settings
 let g:vim_markdown_folding_disabled = 1
+
