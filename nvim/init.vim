@@ -44,6 +44,7 @@ Plug 'tpope/vim-repeat'
 Plug 'docunext/closetag.vim'
 Plug 'majutsushi/tagbar'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'tpope/vim-abolish'
 
 " Display
 Plug 'altercation/vim-colors-solarized'
@@ -62,9 +63,6 @@ Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
 
 " Javascript
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
-
-" Haskell
-Plug 'neovimhaskell/haskell-vim'
 
 " Elm
 Plug 'elmcast/elm-vim'
@@ -93,6 +91,8 @@ set relativenumber
 set ruler
 set shortmess=atI
 set showcmd
+set splitbelow
+set splitright
 
 " Tab settings
 set tabstop=2
@@ -119,6 +119,12 @@ nnoremap <CR> :noh<CR>
 " Tag completion using excuberant ctags
 set tags=tags;/
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip*/.git/*,*/.bundle/*,*/coverage/*,*/public/*,*/log/*,*/vendor/*,*/doc/*,*.o,*.obj,.git,node_modules/**,bower_components/**,**/node_modules/**,_build/**,deps/**,*.beam
+
+" Move around tags with Ctrl and g and t
+map <C-g> :tabprevious<CR>
+map <C-t> :tabnext<CR>
+map <C-x> :tabclose<CR>
+map <C-i> :tabnew<CR>
 
 " Move around windows with Ctrl and movement keys
 map <C-j> <C-W>j
@@ -158,7 +164,9 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
+" FZF stuff
 nnoremap <C-p> :FZF<CR>
+nnoremap <C-s> :Ag<CR>
 
 let g:SuperTabDefaultCompletionType = '<C-n>'
 
@@ -169,18 +177,13 @@ let g:ale_linters = {
 \}
 let g:ale_fixers = {
 \ 'javascript': ['prettier'],
+\ 'python': ['yapf'],
+\ 'ruby': ['rubocop'],
+\ 'json': ['prettier'],
 \}
 let g:ale_javascript_eslint_use_global = 1
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
 let g:ale_lint_delay = 2000
-
-" LanguageClient-neovim settings
-let g:LanguageClient_serverCommands = {
-\ 'haskell': ['hie', '--lsp'],
-\ 'reason': ['ocaml-language-server', '--stdio'],
-\ 'ocaml': ['ocaml-language-server', '--stdio'],
-\}
-let g:LanguageClient_autoStart = 1
 
 " Airline settings
 set guifont=Meslo\ LG\ M\ for\ Powerline
@@ -195,6 +198,9 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 let g:airline#extensions#tabline#enabled = 1     " Show buffers
 let g:airline#extensions#tabline#fnamemod = ':t' " Only show buffer file names
+let g:airline_section_b = ''
+let g:airline_section_y = ''
+let g:airline_section_z = ''
 
 " Buffergator settings
 let g:buffergator_viewport_split_policy = 'R'
@@ -228,19 +234,6 @@ au FileType python setl sw=2 sts=2 et
 
 " Ruby settings
 autocmd FileType ruby nmap <leader>h :%s/:\([^=,'"]*\) =>/\1:/gc<CR>
-
-" Haskell settings
-autocmd FileType haskell setlocal tabstop=4 shiftwidth=4
-autocmd FileType haskell nnoremap <silent> <leader><space> :call LanguageClient_textDocument_hover()<CR>
-autocmd FileType haskell nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-
-" Elm settings
-autocmd FileType elm setlocal tabstop=4 shiftwidth=4
-
-" Reason settings
-autocmd FileType reason nnoremap <silent> <leader><space> :call LanguageClient_textDocument_hover()<CR>
-autocmd FileType reason nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-autocmd FileType reason nnoremap <silent> gf :call LanguageClient_textDocument_formatting()<cr>
 
 " Markdown settings
 let g:vim_markdown_folding_disabled = 1
