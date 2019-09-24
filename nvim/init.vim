@@ -64,6 +64,9 @@ Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
 " Javascript
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 
+" Python
+Plug 'plytophogy/vim-virtualenv', { 'for': 'python' }
+
 " Elm
 Plug 'elmcast/elm-vim'
 
@@ -167,6 +170,11 @@ endif
 " FZF stuff
 nnoremap <C-p> :FZF<CR>
 nnoremap <C-s> :Ag<CR>
+" Disallow Ag from searching for filenames (only file contents)
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
+
+" ALE
+nnoremap <leader>f :ALEFix<CR>
 
 let g:SuperTabDefaultCompletionType = '<C-n>'
 
@@ -231,6 +239,7 @@ autocmd FileType elixir map <silent> <leader><space> :TestFile<CR>
 
 " Python settings
 au FileType python setl sw=2 sts=2 et
+autocmd FileType python :VirtualEnvActivate G-ENV
 
 " Ruby settings
 autocmd FileType ruby nmap <leader>h :%s/:\([^=,'"]*\) =>/\1:/gc<CR>
