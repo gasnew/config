@@ -79,6 +79,11 @@ let mapleader = ";" " Leader
 set backspace=2   " Make backspace behave like in other programs
 set colorcolumn=80 " Show column at 80
 set diffopt+=vertical " Always use vertical diffs
+set guioptions-=L  "remove left-hand scroll bar
+set guioptions-=T
+set guioptions-=T  "remove toolbar
+set guioptions-=m  "remove menu bar
+set guioptions-=r  "remove right-hand scroll bar
 set laststatus=2
 set list listchars=tab:»·,trail:·,nbsp:· " Trailing whitespace
 set nobackup
@@ -89,11 +94,8 @@ set relativenumber
 set ruler
 set shortmess=atI
 set showcmd
-set guioptions-=T
-set guioptions-=m  "remove menu bar
-set guioptions-=T  "remove toolbar
-set guioptions-=r  "remove right-hand scroll bar
-set guioptions-=L  "remove left-hand scroll bar
+set splitbelow
+set splitright
 
 " Tab settings
 set tabstop=2
@@ -127,6 +129,12 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" Move around and create/delete tabs
+map <C-i> :tabnew<CR>
+map <C-x> :tabclose<CR>
+map <C-t> :tabnext<CR>
+map <C-g> :tabprevious<CR>
+
 " Speedier viewport scrolling
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
@@ -152,6 +160,7 @@ if $SSH_CONNECTION
   let g:solarized_termtrans=1
 endif
 colorscheme solarized
+set t_Co=16
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
@@ -170,6 +179,7 @@ let g:ale_linters = {
 \}
 let g:ale_fixers = {
 \ 'javascript': ['prettier'],
+\ 'json': ['prettier'],
 \}
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
 let g:ale_lint_delay = 2000
@@ -236,3 +246,13 @@ autocmd FileType reason nnoremap <silent> gf :call LanguageClient_textDocument_f
 
 " Markdown settings
 let g:vim_markdown_folding_disabled = 1
+
+" Fix Powerline slowing things down
+if ! has('gui_running')
+  set ttimeoutlen=10
+  augroup FastEscape
+    autocmd!
+    au InsertEnter * set timeoutlen=0
+    au InsertLeave * set timeoutlen=1000
+  augroup END
+endif
